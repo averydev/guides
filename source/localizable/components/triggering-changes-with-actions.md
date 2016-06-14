@@ -385,7 +385,7 @@ export default Ember.Component.extend({
 
 ## Calling Actions Up Multiple Component Layers
 
-When your components go multiple template layers deep, its common to need to handle an action several layers up the tree. 
+When your components go multiple template layers deep, it is common to need to handle an action several layers up the tree. 
 Using the action helper, it is possible to make actions which are defined in parent components available to their children through templates alone without adding JavaScript code to child components in between.
 
 For example, say we want move account deletion from the `user-profile` component to its parent `system-preferences-editor` to be handled.
