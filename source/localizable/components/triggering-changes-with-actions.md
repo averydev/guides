@@ -134,8 +134,8 @@ Now we need to make it so that the `onConfirm()` event in the
 `button-with-confirmation()` component triggers the
 `userDidDeleteAccount()` action in the `user-profile` component.
 One important thing to know about actions is that they're functions
-you can call, like any other method on your component.
-So they can be passed from one component to another like this:
+you can call like any other method on your component.
+They can be passed from one component to another like this:
 
 ```app/components/user-profile.hbs
 {{button-with-confirmation text="Click here to delete your account." onConfirm=(action "userDidDeleteAccount")}}
@@ -186,8 +186,7 @@ That makes it easy to remember how to add an action to a component. It's
 like passing an attribute, but you use the `action` helper to pass
 a function instead.
 
-Actions in components allow you to
-decouple an event happening from how it's handled, leading to modular,
+Actions in components allow you to decouple an event happening from how it's handled, leading to modular,
 more reusable components.
 
 ## Handling Action Completion
@@ -386,7 +385,7 @@ export default Ember.Component.extend({
 ## Calling Actions Up Multiple Component Layers
 
 When your components go multiple template layers deep, it is common to need to handle an action several layers up the tree. 
-Using the action helper, it is possible to make actions which are defined in parent components available to their children through templates alone without adding JavaScript code to child components in between.
+Using the action helper, parent components can pass actions to child components through templates alone without adding JavaScript code to those child components.
 
 For example, say we want move account deletion from the `user-profile` component to its parent `system-preferences-editor` to be handled.
 
@@ -409,7 +408,7 @@ component's `deleteCurrentUser` property.
 ```app/templates/components/system-preferences-editor.hbs
 {{user-profile deleteCurrentUser=(action 'deleteUser' login.currentUser.id)}}
 ```
-The action `deleteUser` is in quotes, since `system-preferences-editor` is where the action is defined now. Quotes simply indicate that the action should be looked for in that comoponent's `actions:{}` object, rather than in the `attrs` that have been passed from the parent.
+The action `deleteUser` is in quotes, since `system-preferences-editor` is where the action is defined now. Quotes indicate that the action should be looked for in `actions` local to that component, rather than in those that have been passed from a parent.
 
 In our `user-profile.hbs` template we change our action to call `deleteCurrentUser` as passed above.
 
@@ -418,7 +417,7 @@ In our `user-profile.hbs` template we change our action to call `deleteCurrentUs
   text="Click OK to delete your account."}}
 ```
 
-Note that `deleteCurrentUser` is no longer in quotes here as opposed to [previously](#toc_passing-the-action-to-the-component) . Quotes are used to initially pass the action down the component tree, but at every subsequent level you are instead passing the actual function reference (without quotes) in the action helper.
+Note that `deleteCurrentUser` is no longer in quotes here as opposed to [previously](#toc_passing-the-action-to-the-component). Quotes are used to initially pass the action down the component tree, but at every subsequent level you are instead passing the actual function reference (without quotes) in the action helper.
 
 Now when you confirm deletion, the action goes straight to the `system-preferences-editor` to be handled in its local context.
 
